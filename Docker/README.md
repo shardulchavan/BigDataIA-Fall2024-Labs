@@ -31,71 +31,8 @@ Installing Docker Desktop\
 
 ### **Part 2: Creating the Dockerfile with Poetry**
 
-We’ll now modify the Dockerfile to install Poetry and use it to manage dependencies in the Docker container.
+Docker\Dockerfile
 
-
-#### **Hands-On:**
-
-- **Create or Modify the** `Dockerfile`**:**Here's an updated `Dockerfile` that installs Poetry and uses it to install your project dependencies:\
-  Dockerfile\
-  &#x20;\
-  `# Use the official Python image as the base`
-
-- `FROM python:3.10-slim`
-
--
-
-- `# Install curl and build dependencies`
-
-- `RUN apt-get update && apt-get install -y curl build-essential`
-
--
-
-- `# Install Poetry`
-
-- `RUN curl -sSL https://install.python-poetry.org | python3 -`
-
--
-
-- `# Set Poetry's bin directory in PATH (Poetry installs itself here)`
-
-- `ENV PATH="/root/.local/bin:$PATH"`
-
--
-
-- `# Set the working directory in the container`
-
-- `WORKDIR /app`
-
--
-
-- `# Copy the pyproject.toml and poetry.lock files`
-
-- `COPY pyproject.toml poetry.lock /app/`
-
--
-
-- `# Install dependencies using Poetry`
-
-- `RUN poetry install --no-root`
-
--
-
-- `# Copy the application code`
-
-- `COPY . /app`
-
--
-
-- `# Expose the default Streamlit port`
-
-- `EXPOSE 8501`
-
--
-
-- `# Run the Streamlit app using Poetry`
-
-- `CMD ["poetry", "run", "streamlit", "run", "my_streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]`
 
 
 ### **Explanation of the Dockerfile Commands**
@@ -142,9 +79,7 @@ We’ll now modify the Dockerfile to install Poetry and use it to manage depende
 Now that you have the Dockerfile with Poetry, build the Docker image.
 
 
-#### **Hands-On:**
-
-2. **Build the Docker Image:**In the same directory as the `Dockerfile`, run the following command to build your image:\
+2. Build the Docker Image:In the same directory as the `Dockerfile`, run the following command to build your image:\
     \
    `docker build -t streamlit-app-poetry .`
 
@@ -158,9 +93,7 @@ Now that you have the Dockerfile with Poetry, build the Docker image.
 Once the Docker image is built, you can run your container.
 
 
-#### **Hands-On:**
-
-**Run the Docker Container:**Run the following command to start the container and expose the Streamlit app:\
+Run the Docker Container:Run the following command to start the container and expose the Streamlit app:\
  \
 &#x20;\
 `docker run -d -p 8501:8501 streamlit-app-poetry`
@@ -182,7 +115,6 @@ Once the Docker image is built, you can run your container.
 
 ***
 
-
 ## `Steps to Push Your Docker Image to Docker Hub`
 
 ### `1. Create a Docker Hub Account (If You Haven't Already)`
@@ -197,11 +129,6 @@ Once the Docker image is built, you can run your container.
 ### `2. Log In to Docker Hub from the Command Line`
 
 `Open your terminal in the WSL environment and log in:`
-
-`  `
-
-` `
-
 `docker login`
 
 - `Enter your Docker Hub username and password when prompted.`
@@ -213,10 +140,6 @@ Once the Docker image is built, you can run your container.
 
 `First, you need to tag your local Docker image so that it points to the repository you've created on Docker Hub.`
 
-`  `
-
-` `
-
 `docker tag streamlit-poetry-app YOUR_DOCKERHUB_USERNAME/YOUR_REPOSITORY_NAME:latest`
 
 - `Replace YOUR_DOCKERHUB_USERNAME with your Docker Hub username.`
@@ -227,10 +150,6 @@ Once the Docker image is built, you can run your container.
 ### `4. Push the Docker Image to Docker Hub`
 
 `Now, push the tagged image to your Docker Hub repository:`
-
-`  `
-
-` `
 
 `docker push YOUR_DOCKERHUB_USERNAME/streamlit-poetry-app:latest`
 
@@ -262,241 +181,6 @@ Once the Docker image is built, you can run your container.
 `docker run -p 8501:8501 YOUR_DOCKERHUB_USERNAME/repo_name:latest`
 
 - `Access the App: Open a web browser and go to `[`http://localhost:8501`](http://localhost:8501)
-
-
-## `Creating a VM Instance in GCP with HTTP Traffic Allowed`
-
-### `1. Log in to Google Cloud Console`
-
-- `Open your web browser and navigate to Google Cloud Console.`
-
-- `Sign in with your Google account.`
-
-
-### `2. Select or Create a GCP Project`
-
-- `At the top of the console, click on the project dropdown menu.`
-
-- `Select an existing project or click "New Project" to create a new one.`
-
-  - `If creating a new project:`
-
-    - `Project Name: Enter a name (e.g., streamlit-project).`
-
-    - `Location: Leave as default.`
-
-    - `Click "Create".`
-
-
-### `3. Navigate to Compute Engine`
-
-- `In the left-hand menu, click on "Compute Engine".`
-
-- `If prompted, enable the Compute Engine API by clicking "Enable".`
-
-
-### `4. Create a New VM Instance`
-
-- `On the Compute Engine page, click on "Create Instance".`
-
-
-### `5. Configure Your VM Instance`
-
-#### `Basic Configuration`
-
-- `Name: Enter a name for your VM (e.g., streamlit-vm).`
-
-- `Region and Zone: Choose a location close to your user base or leave the defaults.`
-
-- `Machine Configuration:`
-
-  - `Machine Family: General-purpose.`
-
-  - `Series: E2 (economical) or N1/N2 for more performance.`
-
-  - `Machine Type: For basic usage, e2-medium (2 vCPUs, 4 GB memory) is sufficient.`
-
-
-#### `Boot Disk`
-
-- `Boot Disk Type: Click on "Change" to select your operating system.`
-
-  - `Operating System: Choose Ubuntu.`
-
-  - `Version: Select Ubuntu 20.04 LTS.`
-
-  - `Size (GB): Default is 10 GB; adjust if necessary.`
-
-  - `Click "Select".`
-
-
-#### `Firewall`
-
-- `Allow HTTP Traffic: Check this box.`
-
-- `Allow HTTPS Traffic: Check this box if you plan to use HTTPS.`
-
-  - `Checking these boxes will automatically create firewall rules to allow traffic on ports 80 (HTTP) and 443 (HTTPS).`
-
-
-### `6. Advanced Options (Optional)`
-
-- `Click on "Management, security, disks, networking, sole tenancy" to expand advanced settings.`
-
-- `Networking Tab:`
-
-  - `Network tags: Add tags if you plan to create firewall rules based on tags.`
-
-  - `External IP: Should be set to "Ephemeral" unless you need a static IP.`
-
-
-### `7. Create the VM Instance`
-
-- `Review your configuration to ensure everything is correct.`
-
-- `Click on "Create" at the bottom of the page.`
-
-- `Wait for the instance to be created; this may take a few minutes.`
-
-
-### `8. Verify the VM Instance`
-
-- `Once created, your VM instance will appear in the list of instances.`
-
-- `Note the External IP address; you'll use this to access your application.`
-
-
-### `9. Configure Firewall Rules for Custom Ports`
-
-`Since your Streamlit app runs on port 8501, you need to allow traffic on this port.`
-
-
-#### `Create a Firewall Rule`
-
-1. `Navigate to VPC Network > Firewall in the left-hand menu.`
-
-2. `Click on "Create Firewall Rule".`
-
-
-#### `Set Up the Firewall Rule`
-
-- `Name: allow-streamlit-8501`
-
-- `Network: default (or the network your VM is in)`
-
-- `Priority: Leave at 1000`
-
-- `Direction of Traffic: Ingress`
-
-- `Action on Match: Allow`
-
-- `Targets: All instances in the network (or "Specified target tags" if you added tags)`
-
-- `Source Filter: IP ranges`
-
-- `Source IP Ranges: 0.0.0.0/0 (allows all incoming IP addresses)`
-
-- `Protocols and Ports:`
-
-  - `Select "Specified protocols and ports"`
-
-  - `tcp: Enter 8501`
-
-`(Replace with actual image if possible)`
-
-
-#### `Finalize the Firewall Rule`
-
-- `Click on "Create" to save the rule.`
-
-
-### `10. Connect to Your VM via SSH`
-
-- `Go back to Compute Engine > VM Instances.`
-
-- `Find your VM instance and click on "SSH" to open a terminal window in your browser.`
-
-
-### `11. Install Docker on the VM`
-
-#### `Update Package Lists`
-
-`sudo apt-get update`
-
-
-#### `Install Docker
-sudo apt-get install -y docker.io`
-
-#### `Start and Enable Docker Service`
-
-`sudo systemctl start docker`
-
-`sudo systemctl enable docker`
-
-
-### `2. Add Your User to the Docker Group`
-
-`You can avoid using sudo every time you run Docker commands by adding your user to the docker group.`
-
-
-#### `Step 1: Add User to Docker Group`
-
-`Run the following command to add your user to the docker group: `
-
-- `sudo usermod -aG docker $USER`
-
-* `$USER is a variable that refers to the currently logged-in user.`
-
-* `This command modifies the user account by adding it to the Docker group.`
-
-
-#### `Step 2: Log Out and Log Back In`
-
-`For the group change to take effect, you need to log out and log back in.`
-
-`Alternatively, you can run:`
-
-- `newgrp docker`
-
-`This command refreshes your group membership without needing to log out.`
-
-
-### `12. Pull and Run Your Docker Image`
-
-#### `Log In to Docker Hub (If Necessary)`
-
-`If your Docker image is private:`
-
-`docker login`
-
-- `Enter your Docker Hub username and password when prompted.`
-
-
-#### `Pull Your Docker Image`
-
-`docker pull YOUR_DOCKERHUB_USERNAME/YOUR_REPOSITORY_NAME:latest`
-
-- `Replace YOUR_DOCKERHUB_USERNAME and YOUR_REPOSITORY_NAME with your Docker Hub username and repository name.`
-
-
-#### `Run Your Docker Container`
-
-`docker run -d -p 8501:8501 YOUR_DOCKERHUB_USERNAME/YOUR_REPOSITORY_NAME:latest`
-
-- `-d: Runs the container in detached mode (in the background).`
-
-- `-p 8501:8501: Maps port 8501 of the VM to port 8501 of the container.`
-
-
-#### `Verify the Container is Running`
-
-`docker ps`
-
-- `You should see your container listed.`
-
-\
-\
-\
 
 
 <!--EndFragment-->
