@@ -1,8 +1,8 @@
 <!--StartFragment-->
-
+## Airflow
 Apache Airflow is an open-source platform to programmatically author, schedule, and monitor workflows. It is used to manage and orchestrate complex workflows or pipelines in data engineering, machine learning, and other automated systems. Airflow is especially popular for managing ETL (Extract, Transform, Load) workflows.
 
-Key Concepts in Apache Airflow:
+### Key Concepts in Apache Airflow:
 
 DAG (Directed Acyclic Graph): A collection of tasks organized with dependencies and relationships to define the order of execution.
 
@@ -19,9 +19,9 @@ Executor: Executes the tasks (e.g., LocalExecutor, CeleryExecutor).
 Web UI: A graphical interface to monitor and manage DAGs and tasks.
 
 
-Running Airflow in Docker\
-https\://airflow\.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#
-----------------------------------------------------------------------------------------
+## Running Airflow in Docker
+<https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#>
+
 
 ## Fetching `docker-compose.yaml`
 
@@ -63,23 +63,31 @@ Before starting Airflow for the first time, you need to prepare your environment
 On Linux, the quick-start needs to know your host user id and needs to have group id set to `0`. Otherwise the files created in `dags`, `logs` and `plugins` will be created with `root` user ownership. You have to make sure to configure them for the docker-compose:
 
 Check your user id on terminal using\
-\>> id\
+`id`
+\
+then
+\
 `echo -e "AIRFLOW_UID=$(id -u)" > .env`
 
-    Add sample .gitignore file https://github.com/apache/airflow/blob/main/.gitignore
-    To make sure we don’t push logs & .env files on GitHub
-    Update the following in docker-compose.yml
-    # Do not load examples
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-    # Additional python package
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pandas }
-    Add this into docker-compose.yaml file
-    AIRFLOW__CORE__ENABLE_XCOM_PICKLING: 'true'
-    This allows to use variables among multiple tasks
+#### Add sample .gitignore file 
 
-    # Change default admin credentials
-    _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow2}
-    _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow2}
+https://github.com/apache/airflow/blob/main/.gitignore
+\
+To make sure we don’t push logs & .env files on GitHub
+### Update the following in docker-compose.yml
+#### Do not load examples
+AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+#### Additional python package 
+`_PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pandas }`
+\
+This allows to use variables among multiple tasks
+`AIRFLOW__CORE__ENABLE_XCOM_PICKLING: 'true'`
+
+
+
+#### Change default admin credentials
+_AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow2}
+_AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow2}
 
 
 ### Initialize the database
@@ -89,7 +97,7 @@ On all operating systems, you need to run database migrations and create the fir
     docker compose up airflow-init
 
 
-## Running Airflow
+### Running Airflow
 
 Now you can start all services:\
 `docker compose up`
