@@ -7,4 +7,4 @@ This is a repo for reference to hands on labs.
 2. [Streamlit](Streamlit) - UI App
 3. [GCP Bucket](GCP) - Google Cloud Storage Bucket & VM instance
 4. [Docker](Docker) - Dockerizing Streamlit Application
-5. [Airflow](airflow) - Apache Airflow
+5. [Airflow](Airflow) - Apache Airflow
