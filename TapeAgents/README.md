@@ -65,3 +65,15 @@ new steps to the tape.
  manager.
 
  ![image](https://github.com/user-attachments/assets/8a98be1b-a2eb-45f5-b669-42c09b186894)
+
+
+## Tape Metadata
+
+ 1. tape.metadata.author: which agent or environment made this tape; either by authoring it, or by
+ adding steps to it, or by making a revision of another tape.
+ 2. tape.metadata.parent_id: the ID of the parent tape of which the current tape is a continuation
+ (when applicable).
+ 3. step.metadata.agent: the hierarchical name of the agent that generated the step.
+ 4. step.metadata.node: the name of the node that generated the step.
+ 5. step.metadata.prompt_id: the identifier (id) of the prompt that led to the generation of this step,
+ see the explanation below.
