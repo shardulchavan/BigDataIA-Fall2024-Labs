@@ -77,3 +77,16 @@ new steps to the tape.
  4. step.metadata.node: the name of the node that generated the step.
  5. step.metadata.prompt_id: the identifier (id) of the prompt that led to the generation of this step,
  see the explanation below.
+
+## Redis
+Redis (Remote Dictionary Server) is an open-source, in-memory data structure store primarily used as a database, cache, and message broker.
+
+Redis is an in-memory key-value store, meaning it keeps its data in memory (RAM) rather than on disk, which makes it extremely fast. Unlike traditional databases that rely on disk-based storage, Redis can process a large volume of read and write requests per second, making it well-suited for real-time applications
+
+Key Features And Why we chose Redis 
+1. In-Memory Storage: All data is stored in RAM, which significantly increases read/write speed.
+2. Versatile Data Types: Redis supports various data types, such as strings, lists, sets, sorted sets, hashes, bitmaps, hyperloglogs, geospatial indexes, and streams.
+Versatile Data Types
+
+
+
