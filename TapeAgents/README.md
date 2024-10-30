@@ -5,7 +5,7 @@ A new holistic agent framework that supports practitioners at both the agent dev
 A comprehensive, structured, granular, semantic-level log of the agent session
 
 ## Nodes
-Agents are built from Nodes. They are the basic atoms of intelligence. It can be one LLM call and the processing of the call’s output.
+Agents are built from Nodes. They are the basic atoms of intelligence. Node is responsible for making the LLM call and processing of the call’s output.
 
 Nodes generate new tape entries that we call steps.
 
